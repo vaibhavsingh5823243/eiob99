@@ -6,7 +6,7 @@ import './style.css'
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    
+
     const inputStyle = {
         outline: 'none',
         border: 'none',
@@ -15,47 +15,48 @@ const Login = () => {
         display: 'flex',
         flexDirection: 'row',
         alignItem: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-evenly',
+        whiteSpace: 'nowrap'
 
     }
     const navigate = useNavigate();
     const loginSubmit = async (formdata) => {
-    console.log(formdata);
-    const res=await fetch('http://localhost:5000/user/authenticate',{
-      method : 'POST',
-      body : JSON.stringify(formdata),
-      headers : {'Content-Type' : 'application/json'}
-    });
-    console.log(res.status);
+        console.log(formdata);
+        const res = await fetch('http://localhost:5000/user/authenticate', {
+            method: 'POST',
+            body: JSON.stringify(formdata),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        console.log(res.status);
 
-    
 
-    if (res.status===201) {
-      const data = await res.json();
 
-      sessionStorage.setItem('user',JSON.stringify(data));
+        if (res.status === 201) {
+            const data = await res.json();
 
-      Swal.fire({
-        icon : 'success',
-        title : 'success',
-        text : 'you have loggedin successfully'
-      });
-      navigate('/');
-      
-    }else if (res.status===401){
-      Swal.fire({
-        icon : 'error',
-        title : 'Error',
-        text: 'Email or Password is incorrect'
-      });
-    }else{
-      Swal.fire({
-        icon:'error',
-        title : 'Error',
-        text : 'Unknown error is occured'
-      });
+            sessionStorage.setItem('user', JSON.stringify(data));
+
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: 'you have loggedin successfully'
+            });
+            navigate('/');
+
+        } else if (res.status === 401) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Email or Password is incorrect'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Unknown error is occured'
+            });
+        }
     }
-  }
 
     return (
         <>
@@ -63,32 +64,31 @@ const Login = () => {
                 <div className="forms-container">
                     <div className="signin-signup">
                         <Formik initialValues={{ username: "", password: "" }} onSubmit={loginSubmit}>
-                        {({values, handleChange, handleSubmit})=>(
-                            <form onSubmit={handleSubmit} className="sign-in-form">
-                                <h2 className="title">Sign in</h2>
-                                <div className="input-field">
-                                    <i className="fas fa-user" />
-                                    <input type="text" placeholder="Username/email" style={inputStyle} name='username' onChange={handleChange} value={values.username} />
-                                </div>
-                                <div className="input-field">
-                                    <i className="fas fa-lock" />
-                                    <input type="password" placeholder="Password" style={inputStyle} name='password' onChange={handleChange} value={values.password}/>
-                                </div>
-                                <button  defaultValue="Verify" className="e-9-btn solid" style={inputStyle}>Login</button>
-                                <p className="social-text">Or</p>
-                                <h4>Login With OTP</h4>
-
-                                <div className="input-field otp" style={otpStyle}>
-                                    <i className="fas fa-mobile" />
-                                    <input type="number" placeholder=" Enter Your Phone" style={inputStyle} />
-                                    <button className='otp-btn'>Get OTP</button>
-                                </div>
-                                <div className='input-field'>
-                                    <i className="fas fa-unlock" />
-                                    <input type="text" placeholder=" Enter Your OTP" style={inputStyle} />
-                                </div>
-                                <button  defaultValue="Verify" className="e-9-btn solid" style={inputStyle}>Verify</button>
-                            </form>
+                            {({ values, handleChange, handleSubmit }) => (
+                                <form onSubmit={handleSubmit} className="sign-in-form">
+                                    <div className="title">Sign in</div>
+                                    <div className="input-field">
+                                        <i className="fas fa-user" />
+                                        <input type="text" placeholder="Username/email" style={inputStyle} name='username' onChange={handleChange} value={values.username} />
+                                    </div>
+                                    <div className="input-field">
+                                        <i className="fas fa-lock" />
+                                        <input type="password" placeholder="Password" style={inputStyle} name='password' onChange={handleChange} value={values.password} />
+                                    </div>
+                                    <button defaultValue="Verify" className="e-9-btn solid" style={inputStyle}>Login</button>
+                                    <p>Or</p>
+                                    <div className="title">Login With OTP</div>
+                                    <div className="input-field" style={otpStyle}>
+                                        <i className="fas fa-mobile" />
+                                        <input type="tel" pattern="[7-9]{1}[0-9]{9}" placeholder=" Enter Your Phone" style={inputStyle} />
+                                        <button className='otp-btn'>Get OTP</button>
+                                    </div>
+                                    <div className='input-field'>
+                                        <i className="fas fa-unlock" />
+                                        <input type="text" placeholder=" Enter Your OTP" style={inputStyle} />
+                                    </div>
+                                    <button defaultValue="Verify" className="e-9-btn solid" style={inputStyle}>Verify</button>
+                                </form>
                             )}
                         </Formik>
                     </div>

@@ -156,7 +156,7 @@ form.sign-in-form {
   background: #0765fa;
   font-size: 0.8rem;
   color: #fff;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   padding: 0.5rem;
   border-radius: 0.6rem;
   border: none;
@@ -347,7 +347,7 @@ form.sign-in-form {
   }
   .otp-btn{
     padding: 1rem;
-    margin: 0.5rem;
+    margin: 0.5rem 0;
   }
 
   .image {
